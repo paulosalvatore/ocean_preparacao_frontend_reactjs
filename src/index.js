@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import cn from 'classnames';
 
 function Square(props) {
     return <button className="square" onClick={props.onClick}>
@@ -114,15 +115,32 @@ class Game extends React.Component {
                 'Go to move #' + move :
                 'Go to game start';
 
-            const style = {
-                'fontWeight': step === current ? `bold` : 'inherit',
-            };
+            // const classes = [
+            //     'button',
+            //     step === current ? 'button--selected' : '',
+            // ].join(' ');
+
+            const classes = cn(
+                'button',
+                { 'button--selected': step === current },
+            );
 
             return <li key={move}>
-                <button onClick={() => this.jumpTo(move)} style={style}>
+                <button onClick={() => this.jumpTo(move)} className={classes}>
                     {desc}
                 </button>
             </li>;
+
+            // Change style directly
+            // const style = {
+            //     'fontWeight': step === current ? `bold` : 'inherit',
+            // };
+            //
+            // return <li key={move}>
+            //     <button onClick={() => this.jumpTo(move)} style={style}>
+            //         {desc}
+            //     </button>
+            // </li>;
         });
 
         const status =
