@@ -62,6 +62,7 @@ class Board extends React.Component {
 class Game extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             history: [
                 {
@@ -105,12 +106,22 @@ class Game extends React.Component {
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
+        // console.log(history);
+        // console.log(current);
+
         const moves = history.map((step, move) => {
             const desc = move ?
                 'Go to move #' + move :
                 'Go to game start';
+
+            const style = {
+                'fontWeight': step === current ? `bold` : 'inherit',
+            };
+
             return <li key={move}>
-                <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                <button onClick={() => this.jumpTo(move)} style={style}>
+                    {desc}
+                </button>
             </li>;
         });
 
