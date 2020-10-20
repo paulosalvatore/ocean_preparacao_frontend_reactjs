@@ -78,6 +78,7 @@ class Game extends React.Component {
             ],
             stepNumber: 0,
             xIsNext: true,
+            sortOrder: true, // true = asc, false = desc
         };
     }
 
@@ -108,14 +109,29 @@ class Game extends React.Component {
         });
     }
 
+    sortHistory() {
+        this.setState({
+            sortOrder: !this.state.sortOrder,
+        });
+
+        this.jumpTo(this.state.history.length - 1 - this.state.stepNumber);
+    }
+
     render() {
-        const history = this.state.history;
+        let history = this.state.history;
+
+        if (!this.state.sortOrder) {
+            history = history.slice().reverse();
+        }
+
         const current = history[this.state.stepNumber];
         const { line, winner } = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            const desc = move ?
-                'Go to move #' + move :
+            const fixedMove = this.state.sortOrder ? move : history.length - move - 1;
+
+            const desc = fixedMove ?
+                'Go to move #' + fixedMove :
                 'Go to game start';
 
             // const classes = [
@@ -161,6 +177,9 @@ class Game extends React.Component {
             </div>
 
             <div className="game-info">
+                <button onClick={() => this.sortHistory()}>Order {this.state.sortOrder ? 'Desc' : 'Asc'}</button>
+                <br/>
+                <br/>
                 <div>{status}</div>
                 <ol>{moves}</ol>
             </div>
