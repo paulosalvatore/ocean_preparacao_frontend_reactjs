@@ -167,6 +167,10 @@ class Game extends React.Component {
                 ? 'Winner: ' + winner
                 : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
+        // Draw:
+        // draw = lista.filter(v => !Boolean(v)).length === 0;
+        // draw = lista.filter(Boolean).length === lista.length;
+
         return <div className="game">
             <div className="game-board">
                 <Board
